@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./website
+    command: gunicorn --bind 0.0.0.0:5000 app:app
+    volumes: 
+    - ./website:/usr/src/app/
+    ports:
+    - 5000:5000
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=aendraes
+      - POSTGRES_PASSWORD=lofqvist1
+      - POSTGRES_DB=website_database
+  nginx:
+    build: ./services/nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - web
+
+volumes:
+  postgres_data:
