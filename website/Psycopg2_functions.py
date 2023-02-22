@@ -323,7 +323,16 @@ order by sub3.id;"""
     else:
         for item in exercise_tuple:
             bestworkout.append((item,0,0))
-    return (bestworkout)
+    
+    my_list = [('apple', 1), ('banana', 2), ('orange', 3), ('apple', 4)]
+
+    seen = set()
+    for item in bestworkout:
+        if item[0] in seen:
+            continue
+        else:
+            seen.add(item)
+    return (seen)
 
 
 def select_workouts():

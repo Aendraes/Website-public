@@ -25,7 +25,7 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.blog_post_comments (
-    id integer NOT NULL,
+    id SERIAL,
     author character varying(120),
     content text,
     date_posted date,
@@ -39,18 +39,10 @@ ALTER TABLE public.blog_post_comments OWNER TO postgres;
 -- Name: blog_post_comments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.blog_post_comments_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
 
 
 CREATE TABLE public.blog_posts (
-    id integer NOT NULL,
+    id SERIAL,
     author character varying(60) NOT NULL,
     title character varying(120) NOT NULL,
     content text NOT NULL,
@@ -59,16 +51,10 @@ CREATE TABLE public.blog_posts (
 );
 
 
-CREATE SEQUENCE public.blog_posts_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+
 
 CREATE TABLE public.exercise (
-    exercise_id integer NOT NULL,
+    exercise_id SERIAL,
     exercise_name text
 );
 
@@ -77,8 +63,8 @@ CREATE TABLE public.exercise (
 CREATE TABLE public.session (
     session_id integer,
     exercise_id integer,
-    id integer NOT NULL,
-    user_id integer DEFAULT 1 NOT NULL
+    id SERIAL,
+    user_id integer
 );
 
 
@@ -92,9 +78,9 @@ CREATE TABLE public.session_backup (
 --
 
 CREATE TABLE public.session_name (
-    session_id integer NOT NULL,
+    session_id SERIAL,
     name character varying(80),
-    user_id integer DEFAULT 1 NOT NULL
+    user_id integer
 );
 
 
@@ -118,26 +104,21 @@ CREATE TABLE public.temperature (
 
 
 CREATE TABLE public.workout (
-    workout_id integer NOT NULL,
+    workout_id SERIAL,
     workout_date date
 );
 
 --
 
 CREATE TABLE public.workoutexercises (
-    id integer NOT NULL,
+    id SERIAL,
     workout_id integer,
     exercise_id integer,
     sets integer DEFAULT 1,
     repetitions integer,
     weight double precision,
-    user_id integer DEFAULT 1
+    user_id integer
 );
-CREATE TABLE public.login (
-    userid integer NOT NULL,
-    username text,
-    password text,
-    register_date date);
 
 
 COPY public.blog_post_comments (id, author, content, date_posted, post_id) FROM stdin;
@@ -204,13 +185,6 @@ COPY public.exercise (exercise_id, exercise_name) FROM stdin;
 
 
 --
--- Data for Name: login; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.login (userid, username, password, register_date) FROM stdin;
-1	aendraes	Magnus725!	2022-12-17
-2	Dummyaccount	dummypassword	2022-12-22
-\.
 
 
 --
