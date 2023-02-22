@@ -3,11 +3,11 @@ import psycopg2
 import datetime
 import pandas as pd
 
-password = "lofqvist1"
+password = "Kj&hL8+#Sj*f@g1mz"
 database = "website_database"
 host = "db"
 port = 5432
-user = "aendraes"
+user = "postgres"
 conn = False
 delete_index = 'name'
 
