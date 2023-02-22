@@ -48,18 +48,6 @@ CREATE SEQUENCE public.blog_post_comments_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.blog_post_comments_id_seq OWNER TO postgres;
-
---
--- Name: blog_post_comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.blog_post_comments_id_seq OWNED BY public.blog_post_comments.id;
-
-
---
--- Name: blog_posts; Type: TABLE; Schema: public; Owner: postgres
---
 
 CREATE TABLE public.blog_posts (
     id integer NOT NULL,
@@ -71,12 +59,6 @@ CREATE TABLE public.blog_posts (
 );
 
 
-ALTER TABLE public.blog_posts OWNER TO postgres;
-
---
--- Name: blog_posts_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
 CREATE SEQUENCE public.blog_posts_id_seq
     AS integer
     START WITH 1
@@ -85,89 +67,12 @@ CREATE SEQUENCE public.blog_posts_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE public.blog_posts_id_seq OWNER TO postgres;
-
---
--- Name: blog_posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.blog_posts_id_seq OWNED BY public.blog_posts.id;
-
-
---
--- Name: exercise; Type: TABLE; Schema: public; Owner: postgres
---
-
 CREATE TABLE public.exercise (
     exercise_id integer NOT NULL,
     exercise_name text
 );
 
 
-ALTER TABLE public.exercise OWNER TO postgres;
-
---
--- Name: exercise_exercise_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.exercise_exercise_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.exercise_exercise_id_seq OWNER TO postgres;
-
---
--- Name: exercise_exercise_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.exercise_exercise_id_seq OWNED BY public.exercise.exercise_id;
-
-
---
--- Name: login; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.login (
-    userid integer NOT NULL,
-    username text NOT NULL,
-    password text NOT NULL,
-    register_date date
-);
-
-
-ALTER TABLE public.login OWNER TO postgres;
-
---
--- Name: login_userid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.login_userid_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.login_userid_seq OWNER TO postgres;
-
---
--- Name: login_userid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.login_userid_seq OWNED BY public.login.userid;
-
-
---
--- Name: session; Type: TABLE; Schema: public; Owner: postgres
---
 
 CREATE TABLE public.session (
     session_id integer,
@@ -177,43 +82,12 @@ CREATE TABLE public.session (
 );
 
 
-ALTER TABLE public.session OWNER TO postgres;
-
---
--- Name: session_backup; Type: TABLE; Schema: public; Owner: postgres
---
 
 CREATE TABLE public.session_backup (
     session_id integer,
     exercise_id integer
 );
 
-
-ALTER TABLE public.session_backup OWNER TO postgres;
-
---
--- Name: session_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.session_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.session_id_seq OWNER TO postgres;
-
---
--- Name: session_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.session_id_seq OWNED BY public.session.id;
-
-
---
 -- Name: session_name; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -223,34 +97,6 @@ CREATE TABLE public.session_name (
     user_id integer DEFAULT 1 NOT NULL
 );
 
-
-ALTER TABLE public.session_name OWNER TO postgres;
-
---
--- Name: session_name_session_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.session_name_session_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.session_name_session_id_seq OWNER TO postgres;
-
---
--- Name: session_name_session_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.session_name_session_id_seq OWNED BY public.session_name.session_id;
-
-
---
--- Name: station; Type: TABLE; Schema: public; Owner: postgres
---
 
 CREATE TABLE public.station (
     station_id integer NOT NULL,
@@ -262,12 +108,6 @@ CREATE TABLE public.station (
 );
 
 
-ALTER TABLE public.station OWNER TO postgres;
-
---
--- Name: temperature; Type: TABLE; Schema: public; Owner: postgres
---
-
 CREATE TABLE public.temperature (
     station_id integer,
     temperature_id integer NOT NULL,
@@ -277,66 +117,11 @@ CREATE TABLE public.temperature (
 );
 
 
-ALTER TABLE public.temperature OWNER TO postgres;
-
---
--- Name: temperature_temperature_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.temperature_temperature_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.temperature_temperature_id_seq OWNER TO postgres;
-
---
--- Name: temperature_temperature_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.temperature_temperature_id_seq OWNED BY public.temperature.temperature_id;
-
-
---
--- Name: workout; Type: TABLE; Schema: public; Owner: postgres
---
-
 CREATE TABLE public.workout (
     workout_id integer NOT NULL,
     workout_date date
 );
 
-
-ALTER TABLE public.workout OWNER TO postgres;
-
---
--- Name: workout_workout_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.workout_workout_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.workout_workout_id_seq OWNER TO postgres;
-
---
--- Name: workout_workout_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.workout_workout_id_seq OWNED BY public.workout.workout_id;
-
-
---
--- Name: workoutexercises; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.workoutexercises (
@@ -348,98 +133,12 @@ CREATE TABLE public.workoutexercises (
     weight double precision,
     user_id integer DEFAULT 1
 );
+CREATE TABLE public.login (
+    userid integer NOT NULL,
+    username text,
+    password text,
+    register_date date);
 
-
-ALTER TABLE public.workoutexercises OWNER TO postgres;
-
---
--- Name: workoutexercises_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.workoutexercises_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.workoutexercises_id_seq OWNER TO postgres;
-
---
--- Name: workoutexercises_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.workoutexercises_id_seq OWNED BY public.workoutexercises.id;
-
-
---
--- Name: blog_post_comments id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.blog_post_comments ALTER COLUMN id SET DEFAULT nextval('public.blog_post_comments_id_seq'::regclass);
-
-
---
--- Name: blog_posts id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.blog_posts ALTER COLUMN id SET DEFAULT nextval('public.blog_posts_id_seq'::regclass);
-
-
---
--- Name: exercise exercise_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.exercise ALTER COLUMN exercise_id SET DEFAULT nextval('public.exercise_exercise_id_seq'::regclass);
-
-
---
--- Name: login userid; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.login ALTER COLUMN userid SET DEFAULT nextval('public.login_userid_seq'::regclass);
-
-
---
--- Name: session id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.session ALTER COLUMN id SET DEFAULT nextval('public.session_id_seq'::regclass);
-
-
---
--- Name: session_name session_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.session_name ALTER COLUMN session_id SET DEFAULT nextval('public.session_name_session_id_seq'::regclass);
-
-
---
--- Name: temperature temperature_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.temperature ALTER COLUMN temperature_id SET DEFAULT nextval('public.temperature_temperature_id_seq'::regclass);
-
-
---
--- Name: workout workout_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.workout ALTER COLUMN workout_id SET DEFAULT nextval('public.workout_workout_id_seq'::regclass);
-
-
---
--- Name: workoutexercises id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.workoutexercises ALTER COLUMN id SET DEFAULT nextval('public.workoutexercises_id_seq'::regclass);
-
-
---
--- Data for Name: blog_post_comments; Type: TABLE DATA; Schema: public; Owner: postgres
---
 
 COPY public.blog_post_comments (id, author, content, date_posted, post_id) FROM stdin;
 \.
@@ -35657,299 +35356,4 @@ COPY public.workoutexercises (id, workout_id, exercise_id, sets, repetitions, we
 \.
 
 
---
--- Name: blog_post_comments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.blog_post_comments_id_seq', 1, false);
-
-
---
--- Name: blog_posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.blog_posts_id_seq', 2, true);
-
-
---
--- Name: exercise_exercise_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.exercise_exercise_id_seq', 80, true);
-
-
---
--- Name: login_userid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.login_userid_seq', 2, true);
-
-
---
--- Name: session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.session_id_seq', 103, true);
-
-
---
--- Name: session_name_session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.session_name_session_id_seq', 47, true);
-
-
---
--- Name: temperature_temperature_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.temperature_temperature_id_seq', 34643, true);
-
-
---
--- Name: workout_workout_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.workout_workout_id_seq', 42, true);
-
-
---
--- Name: workoutexercises_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.workoutexercises_id_seq', 91, true);
-
-
---
--- Name: blog_posts blog_posts_content_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.blog_posts
-    ADD CONSTRAINT blog_posts_content_key UNIQUE (content);
-
-
---
--- Name: blog_posts blog_posts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.blog_posts
-    ADD CONSTRAINT blog_posts_pkey PRIMARY KEY (id);
-
-
---
--- Name: blog_posts blog_posts_title_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.blog_posts
-    ADD CONSTRAINT blog_posts_title_key UNIQUE (title);
-
-
---
--- Name: exercise exercise_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.exercise
-    ADD CONSTRAINT exercise_pkey PRIMARY KEY (exercise_id);
-
-
---
--- Name: login login_password_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.login
-    ADD CONSTRAINT login_password_key UNIQUE (password);
-
-
---
--- Name: login login_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.login
-    ADD CONSTRAINT login_pkey PRIMARY KEY (userid);
-
-
---
--- Name: login login_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.login
-    ADD CONSTRAINT login_username_key UNIQUE (username);
-
-
---
--- Name: session_name session_name_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.session_name
-    ADD CONSTRAINT session_name_pkey PRIMARY KEY (session_id);
-
-
---
--- Name: session session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.session
-    ADD CONSTRAINT session_pkey PRIMARY KEY (id);
-
-
---
--- Name: station station_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.station
-    ADD CONSTRAINT station_pkey PRIMARY KEY (station_id);
-
-
---
--- Name: temperature temperature_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.temperature
-    ADD CONSTRAINT temperature_pkey PRIMARY KEY (temperature_id);
-
-
---
--- Name: exercise uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.exercise
-    ADD CONSTRAINT uniq UNIQUE (exercise_name);
-
-
---
--- Name: workout workout_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.workout
-    ADD CONSTRAINT workout_pkey PRIMARY KEY (workout_id);
-
-
---
--- Name: workoutexercises workoutexercises_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.workoutexercises
-    ADD CONSTRAINT workoutexercises_pkey PRIMARY KEY (id);
-
-
---
--- Name: session session_exercise_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.session
-    ADD CONSTRAINT session_exercise_id_fkey FOREIGN KEY (exercise_id) REFERENCES public.exercise(exercise_id);
-
-
---
--- Name: session session_session_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.session
-    ADD CONSTRAINT session_session_id_fkey FOREIGN KEY (session_id) REFERENCES public.session_name(session_id);
-
-
---
--- Name: temperature temperature_station_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.temperature
-    ADD CONSTRAINT temperature_station_id_fkey FOREIGN KEY (station_id) REFERENCES public.station(station_id);
-
-
---
--- Name: workoutexercises workoutexercises_exercise_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.workoutexercises
-    ADD CONSTRAINT workoutexercises_exercise_id_fkey FOREIGN KEY (exercise_id) REFERENCES public.exercise(exercise_id);
-
-
---
--- Name: workoutexercises workoutexercises_workout_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.workoutexercises
-    ADD CONSTRAINT workoutexercises_workout_id_fkey FOREIGN KEY (workout_id) REFERENCES public.workout(workout_id);
-
-
---
--- Name: SEQUENCE blog_post_comments_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT SELECT,USAGE ON SEQUENCE public.blog_post_comments_id_seq TO read_only_user;
-
-
---
--- Name: SEQUENCE blog_posts_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT SELECT,USAGE ON SEQUENCE public.blog_posts_id_seq TO read_only_user;
-
-
---
--- Name: SEQUENCE exercise_exercise_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT SELECT,USAGE ON SEQUENCE public.exercise_exercise_id_seq TO read_only_user;
-
-
---
--- Name: SEQUENCE login_userid_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT SELECT,USAGE ON SEQUENCE public.login_userid_seq TO read_only_user;
-
-
---
--- Name: SEQUENCE session_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT SELECT,USAGE ON SEQUENCE public.session_id_seq TO read_only_user;
-
-
---
--- Name: SEQUENCE session_name_session_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT SELECT,USAGE ON SEQUENCE public.session_name_session_id_seq TO read_only_user;
-
-
---
--- Name: TABLE station; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT SELECT ON TABLE public.station TO read_only_user;
-
-
---
--- Name: TABLE temperature; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT SELECT ON TABLE public.temperature TO read_only_user;
-
-
---
--- Name: SEQUENCE temperature_temperature_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT SELECT,USAGE ON SEQUENCE public.temperature_temperature_id_seq TO read_only_user;
-
-
---
--- Name: SEQUENCE workout_workout_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT SELECT,USAGE ON SEQUENCE public.workout_workout_id_seq TO read_only_user;
-
-
---
--- Name: SEQUENCE workoutexercises_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-GRANT SELECT,USAGE ON SEQUENCE public.workoutexercises_id_seq TO read_only_user;
-
-
---
--- PostgreSQL database dump complete
---
 
