@@ -22,7 +22,7 @@ services:
       - VIRTUAL_HOST=your_domain
       - LETSENCRYPT_HOST=your_domain
     ports:
-      - 1337:80
+      - 80:80
       - 443:443
     depends_on:
       - web
