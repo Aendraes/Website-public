@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}{% for message in messages %}
+{% if message=="danger" %}
+<div class="alert alert-danger pb-2">
+    <ul class="flashes list-group-item list-unstyled mb-2">
+
+        <li>Error: Title and content have to be unique.</li>
+
+    </ul>
+</div>
+{% endif %}
+{% if message=="deletesuccess" %}
+<div class="alert alert-info pb-2">
+    <ul class="flashes list-group-item list-unstyled mb-2">
+
+        <li>Success! Post deleted successfully.</li>
+
+    </ul>
+</div>
+{% endif %}
+{% endfor %}
+  {% endif %}
+{% endwith %}
+{%block headline%} Team Scrambler {%endblock%}
+{% block content %}
+<form class="pb-2" action="{{ url_for('calculate_groups') }}" method="POST">
+    <label for="title">Number of groups:</label>
+    <div class="input-group-prepend">
+        <input name="groupnumber" maxlength="60" type="text" class="form-control" id="title" style="width:200px !important;" size="2">
+    </div>
+
+    <label for="postarea">Enter the people here, separate by comma.</label>
+    <textarea name="people" class="form-control" id="postarea" rows="5"></textarea>
+    <input class="btn btn-secondary mt-2" type="submit" value="Submit">
+</form>
+<div class="d-flex justify-content-center" style="text-align:center;">
+    {% if  groups %}
+    Groups:
+    <ol>
+        {% autoescape false %}
+        
+            {% for group in groups %}
+            <br /><li">
+    {%for person in group %}
+   || {{person}} ||
+    {%endfor%}
+</li>
+        {% endfor %}
+        {% endautoescape %}
+    </ol>
+    {% endif %}
+    {% endblock %}
+</div>
+
+

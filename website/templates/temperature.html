@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{%block headline%} Get the closest temperature data. {%endblock%}
+{% block content %}
+<form class="pb-2" action="{{ url_for('get_temperature') }}" method="POST">
+    <div class="d-flex justify-content-center">
+    <div class="input-group-prepend">
+        <label for="location">Choose a location to get temperature data.</label>
+        <input name="location" maxlength="120" type="text" class="form-control" id="location" style="width:300px !important;" size="2">
+    </div>
+    <input class="btn btn-secondary btn-sm mt-4" type="submit" style="height:38px;" value="Submit">
+</form></div>
+<div class="d-flex justify-content-center mt-4" style="text-align:center;">
+<h4>{{station_name}}</h4>
+</div>
+    <div class="d-flex justify-content-center" style="text-align:center;">
+
+        <canvas id="lineChart" width="900" height="400"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+        var ctx = document.getElementById("lineChart").getContext("2d");
+        var lineChart = new Chart(ctx,{
+        type: "line",
+        data: {
+        labels: {{timestamps | safe}},
+        datasets: [
+        {
+          label: "C",
+          data: {{temperatures | safe}},
+          fill: false,
+          borderColor: "rgb(75, 192, 192)",
+          lineTension: 0.1
+        }
+        ]
+        },
+        options: {
+        responsive: false
+        }
+        });
+    </script>
+</div>
+{%autoescape False%}
+{%endautoescape%}
+{%endblock%}
+

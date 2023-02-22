@@ -1,0 +1,172 @@
+{% extends 'layout.html' %}
+
+{% block headline %}Blog Posts{% endblock %}
+{% block right_menu %}
+<div style="position:relative;padding-top:2em;padding-left:2em;" class="col-sm-3 h-25 ml-2" name="side menu">
+    <ul class="list-group-item list-unstyled">
+        <li class="list-item" style="border-bottom:1px dotted gray;margin-bottom:4px;">
+            <a class="link-dark" data-bs-toggle="collapse" href="#newpost" style="text-decoration:none;">New Post</a>
+        </li>
+        {% for post in posts %}
+        <li class="list-item"><a class="link-dark" style="text-decoration:none;" href="#{{post.title}}">{{post.title}}</a></li>
+        {% endfor %}
+    </ul>
+</div>{% endblock %}
+{% block content %}
+
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}{% for message in messages %}
+{% if message=="danger" %}
+<div class="alert alert-danger pb-2">
+    <ul class="flashes list-group-item list-unstyled mb-2">
+
+        <li>Error: Title and content have to be unique.</li>
+
+    </ul>
+</div>
+{% endif %}
+{% if message=="success" %}
+<div class="alert alert-success pb-2">
+    <ul class="flashes list-group-item list-unstyled mb-2">
+
+        <li>Success! Post created successfully.</li>
+
+    </ul>
+</div>
+{% endif %}
+{% if message=="deletedanger" %}
+<div class="alert alert-danger pb-2">
+    <ul class="flashes list-group-item list-unstyled mb-2">
+
+        <li>Error: Something went wrong trying to delete.</li>
+
+    </ul>
+</div>
+{% endif %}
+{% if message=="deletesuccess" %}
+<div class="alert alert-info pb-2">
+    <ul class="flashes list-group-item list-unstyled mb-2">
+
+        <li>Success! Post deleted successfully.</li>
+
+    </ul>
+</div>
+{% endif %}
+{% endfor %}
+  {% endif %}
+{% endwith %}
+
+
+<div class="collapse row" id="newpost">
+    <form class="pb-2" action="{{ url_for('add_new_post') }}" method="POST">
+        <div class="row">
+            <div class="input-group-prepend col-xs-6">
+                <label for="author">Author:</label>
+                <input name="author" maxlength="30" type="text" class="form-control" id="author" style="width:200px !important;" size="2" />
+            </div>
+            <div class="input-group-prepend col-xs-6">
+                <label for="email">Email:</label>
+                <input name="email" maxlength="50" type="text" class="form-control" id="email" style="width:200px !important;" size="2" />
+            </div>
+        </div>
+        <label for="title">Title:</label>
+        <div class="input-group-prepend">
+            <input name="title" maxlength="60" type="text" class="form-control" id="title" style="width:200px !important;" size="2">
+        </div>
+
+        <label for="postarea">Post text</label>
+        <textarea name="content" class="form-control" id="postarea" rows="5"></textarea>
+        <input class="btn btn-secondary mt-2" type="submit" value="Submit">
+    </form>
+</div>
+
+
+
+    {% for post in posts %}
+<article class="media content-section">
+    <div class="media-body mb-4" style="border-bottom: solid 2px #ebebeb;">
+        <div class="article-metadata" id="{{post.title}}">
+            <a class="mr-2 link-dark" style="text-decoration:none">{{ post.author }}</a>
+            <small class="text-muted">{{ post.date_posted }}</small>
+            {%if cookie%}
+            <form action="{{url_for("delete_post")}}">
+                <input type="hidden" value="{{post.title}}" name="title" />
+                <input type="image" id="deletebutton" src="{{url_for('static', filename='delete-button.png')}}">
+            </form>
+            <form action="{{url_for("edit_post")}}">
+                <input type="hidden" value="{{post.title}}" name="title" />
+                <input type="image" id="deletebutton" src="{{url_for('static', filename='edit-button.png')}}">
+            </form>
+            {%endif%}
+        </div>
+        <div class="pb-0" style="border-bottom:2px solid #ebebeb;"><h3 class="text-center mb-3">{{ post.title }}</h3></div>
+        <p class="article-content">
+            {% autoescape false %}
+            {{ post.content }}
+            {% endautoescape %}
+        </p></form>
+    </div>
+
+
+    <div class="media-body mb-4">
+        <div class="article-metadata">
+            <p>
+                
+                <a class="link-dark" data-bs-toggle="collapse" href="#viewcomments{{ post.id }}" style="text-decoration:none;">View comments ({{post.comment_count[0]}})</a>
+                |
+                <a class="link-dark" data-bs-toggle="collapse" href="#inputcollapse{{ post.id }}" style="text-decoration:none;">Add comment</a>
+            </p>
+        </div>
+        <div class="collapse row" id="inputcollapse{{ post.id }}">
+            <form action="{{ url_for('add_new_comment') }}" method="POST">
+                <label for="author_for_id_{{ post.id }}">Author:</label>
+                <div class="input-group-prepend ">
+                    <input name="author" maxlength="30" type="text" class="form-control" id="author_for_id_{{ post.id }}" style="width:200px !important;" size="2">
+                </div>
+                <label for="email_for_id_{{ post.id }}">Email:</label>
+                <div class="input-group-prepend ">
+                    <input name="email" maxlength="50" type="text" class="form-control" id="email_for_id_{{ post.id }}" style="width:200px !important;" size="2">
+                </div>
+                <label for="commentarea">Comment text</label>
+                <textarea name="comment_content" class="form-control" id="commentarea" rows="5"></textarea>
+                <input type="hidden" name="post_id" value="{{post.id}}" />
+                <input class="btn btn-secondary mt-2" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</article>
+<div class="collapse pl-3" id="viewcomments{{post.id}}">
+{% for comment in post_comments %}
+{% if comment.post_id == post.id %}
+<article class="media content-section">
+    <div class="media-body mb-4"">
+        <div class="article-metadata" id="{{post.title}}">
+            <a class="mr-2 link-dark" style="text-decoration:none">{{ comment.author }}</a>
+            <small class="text-muted">{{ comment.date_posted }}</small>
+
+
+            <!-- <form action="{{url_for("delete_post")}}">
+         <input type="hidden" value="{{comment.id}}" name="title" />
+         <input type="image" id="deletebutton" src="{{url_for('static', filename='delete-button.png')}}">
+     </form>
+     <form action="{{url_for("edit_post")}}">
+         <input type="hidden" value="{{comment.id}}" name="title" />
+         <input type="image" id="deletebutton" src="{{url_for('static', filename='edit-button.png')}}">
+     </form>-->
+        </div>
+                <div style="border: solid 1px #ebebeb;margin-top:1px;">
+                    <p class="article-content">
+                        {% autoescape false %}
+                        {{ comment.content }}
+                        {% endautoescape %}
+                    </p>
+                    </form>
+                
+        </div>
+    </div>
+</article>
+    {% endif %}
+    {% endfor %}
+    </div>
+    {% endfor %}
+{% endblock %}

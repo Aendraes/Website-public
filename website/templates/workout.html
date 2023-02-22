@@ -1,0 +1,165 @@
+{%extends 'layout.html'%}
+
+
+
+{% block right_menu %}{%if not add_session%}
+<div style="position:relative;padding-top:2em;padding-left:2em;" class="col-sm-3 h-25 ml-2" name="side menu">
+    <ul class="list-group-item list-unstyled">
+        <li class="list-item" style="border-bottom:1px dotted gray;margin-bottom:4px;">
+            <a class="link-dark" href="{{url_for('add_session')}}" style="text-decoration:none;">Add new Workout</a>
+        </li>
+        {% for post in sessions %}
+        <li class="list-item"><a class="link-dark" style="text-decoration:none;" href="{{url_for('add_workout')+"?name="+post[0]}}">{{post[0]}}</a></li>
+        {% endfor %}
+    </ul>
+</div>{%endif%}{% endblock %}
+{%block headline%} My workout statistics{%endblock%}
+{% block content %}
+{%if name%}
+
+<h3 class="pb-2 pr-2" style="text-align:center;"><strong>{{name}}:</strong> </h5>
+<form class="pb-2" action="{{ url_for('add_workout') }}" method="POST" style="text-align:center;">
+    {%for exercise_name, reps, weight in sessionexercises%}
+    <div class="p-2 m-2" style="text-align:center;"><h3>{{exercise_name}}</h3></div>
+    <section class="d-flex justify-content-center"><div class="input-group-prepend">
+        <label for="reps">Reps: ({{reps}})</label>
+        <input name="reps" maxlength="120" type="text" class="form-control" id="location" style="width:150px !important;" size="2">
+    </div>
+    <div class="input-group-prepend">
+        <label for="weight">Weight: ({{weight}})</label>
+        <input name="weight" maxlength="120" type="text" class="form-control" id="location" style="width:150px !important;" size="2">
+    </div>
+    <input name="exercise" value="{{exercise_name}}" type="hidden"><input name="sets" value="1" type="hidden">
+</section>
+{%endfor%}
+    <input class="btn btn-secondary btn-sm mt-4" type="submit" style="height:38px;" value="Submit">
+</form>
+
+{%endif%}
+
+
+
+{%autoescape False%}
+{%if add_session%}
+<h3 class="pb-2 pr-2" style="text-align:center;"><strong>Add new Workout:</strong> </h5>
+    <div class="p-2 m-2" style="text-align:center;" ><h3>Workout Name:</h3></div>
+    <div class="d-flex justify-content-center">
+<form name="exerciseform" id="exerciseform" action="{{url_for('add_session')}}" method="POST">
+    <!-- The hidden input elements will be added to this form -->
+<label for="session_name">Workout Name: </label><input type="text" name="session_name" id="session_name"></div>
+<div class="d-flex justify-content-center mt-3">    
+<select id="select" style="width:250px;">
+    {%for exercise_names in exercises%}{%for exercise_name in exercise_names%}
+        <option value="{{exercise_name}}">{{exercise_name}}</option>
+{%endfor%}{%endfor%}
+
+</select><a class="link-dark ml-2" id="addnewexercise" style="text-decoration:none;">Add New Exercise</a></div><div class="d-inline-flex justify-content-center mt-4">
+
+    <ul id="list" style="width:250px;" class="list-group-item list-unstyled"></ul>
+
+</div>
+<div class="d-flex justify-content-center">
+    <input class="btn btn-secondary btn-sm mt-4" type="submit" style="height:38px;" value="Submit">  </form>
+</div><form class="d-inline-flex justify-content-center mt-4" method="POST" name="addexerciseform" id="addexerciseform" action="{{url_for('add_exercise')}}">
+
+</form>
+{%endif%}
+
+{%if not add_session and not name%}
+{%if workouts%}
+<div class="d-flex justify-content-center">
+    <select id="selectt" style="width:250px;">
+        <option value="selectexercise">Select Exercise</option>
+    {%for exercise_names in exercises%}{%for exercise_name in exercise_names%}
+        <option value="{{exercise_name}}">{{exercise_name}}</option>
+{%endfor%}{%endfor%}
+</select></div><div class="d-flex justify-content-center">
+<ul id="listt" class="list-group-item list-unstyled mt-4">
+{%if selected_exercise%}
+<li><strong><h3 style="text-align:center;">{{exercise_name}}</h3></strong></li>
+<li> {% for sets,reps,weight,date in selected_exercise %}
+    Date: {{date}},
+    Sets: {{sets}},
+    Reps: {{reps}},
+    Weight: {{weight}}<br>
+    {%endfor%}</li>
+
+{%endif%}
+</ul></div>
+{%endif%}
+{%endif%}
+
+<script>
+    window.onload = function() {
+        var selectElement = document.getElementById("select");
+        if (selectElement != null){
+ 
+        selectElement.addEventListener("change", function() {
+
+          var text = this.options[this.selectedIndex].text;
+        
+
+          var li = document.createElement("li");
+          li.textContent = text;
+        
+          var img = document.createElement("img");
+          img.src = "../static/delete-button.png";
+          img.width = 15;
+          img.height = 15;
+          img.addEventListener("click", function() {
+
+            this.parentNode.remove();
+          });
+
+          li.appendChild(img);
+          var exform = document.getElementById("exerciseform");
+          var input = document.createElement("input");
+          input.type = "hidden";
+          input.name = "exercise";
+          input.value = text;
+          exform.appendChild(input);
+          var ul = document.getElementById("list");
+          ul.appendChild(li);
+        })
+        }; 
+
+        if (!document.getElementById("addexerciselabel") && !document.getElementById("addexerciseinput") && document.getElementById("addnewexercise")) {
+        document.getElementById("addnewexercise").addEventListener("click", function() {
+  // create label element
+  var label = document.createElement("label");
+  label.innerHTML = "Enter exercise to add";
+  label.id = "addexerciselabel"
+  // create input element
+  var input = document.createElement("input");
+  input.type = "text";
+  input.name = "addexercise";
+  input.id = "addexerciseinput"
+  // create submit button
+  var button = document.createElement("input");
+  button.type = "submit";
+  button.name = "addexercisebutton";
+  button.id = "addexercisebutton";
+  button.class = "btn btn-secondary btn-sm mt-4";
+  button.style = "height:30px;"
+  button.value = "Add Exercise"
+  // get the div element
+  var div = document.getElementById("addexerciseform");
+
+  // add the label and input elements to the div
+  div.appendChild(label);
+  div.appendChild(input);
+  div.appendChild(button);
+});};
+if (document.getElementById("selectt")){
+var selecttElement = document.getElementById("selectt");
+        
+        selecttElement.addEventListener("change", function() {
+
+          var text = this.options[this.selectedIndex].text;
+          window.location.href = "{{url_for('workout') | safe}}?exercise="+text;
+        });}; 
+    };
+        </script>
+{%endautoescape%}
+{%endblock%}
+
