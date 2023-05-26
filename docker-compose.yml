@@ -17,16 +17,23 @@ services:
     ports:
     - 5000:5000
   nginx:
-    image: aendraes/nginx
+    image: nginx:latest
     environment:
-      - VIRTUAL_HOST=your_domain
-      - LETSENCRYPT_HOST=your_domain
+      - VIRTUAL_HOST=aendraes.com
+      - LETSENCRYPT_HOST=aendraes.com
     ports:
       - 80:80
       - 443:443
     depends_on:
       - web
     restart: always
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./certbot/www:/var/www/certbot/:ro
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
 
 volumes:
   postgres_data:
